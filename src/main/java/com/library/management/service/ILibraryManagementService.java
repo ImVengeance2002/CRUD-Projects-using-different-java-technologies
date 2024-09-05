@@ -5,4 +5,6 @@ public interface ILibraryManagementService {
 	public void viewBooks();
 	public void updateBook();
 	public void deleteBook();
+	public void borrowBook();
+	public void returnBook();
 }
