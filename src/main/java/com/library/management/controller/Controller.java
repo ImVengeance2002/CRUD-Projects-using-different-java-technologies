@@ -4,16 +4,17 @@ import java.util.Scanner;
 
 import com.library.management.dto.User;
 import com.library.management.service.IUserManagerService;
-import com.library.management.service.UserManagerServiceImpl;
+import com.library.management.serviceFactory.UserManagerServiceFactory;
 
 public class Controller {
 	
-    private static IUserManagerService userManager =new UserManagerServiceImpl();
+    private static IUserManagerService userManager =null;
     private static Scanner scanner = new Scanner(System.in);
 	private static User currentUser;
 	
 	public static void login() {
 		boolean running=true;
+		userManager=UserManagerServiceFactory.getUserManagerService();
 		while (running) {
 			System.out.println("\nLibrary Management System");
 			System.out.println("*************************");
@@ -24,6 +25,7 @@ public class Controller {
 			System.out.println("Enter Password");
 			currentUser = userManager.authenticate(username, password);
 			if (currentUser != null) {
+				System.out.println(currentUser.getRole().name());
 				if (currentUser.getRole()==User.Role.ADMIN) {
 					AdminController admin=new AdminController(currentUser);
 					admin.showMenu();

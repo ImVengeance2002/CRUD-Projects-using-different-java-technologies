@@ -16,5 +16,8 @@ public class User implements Serializable {
 
 	    public enum Role {
 	        ADMIN, LIBRARIAN, MEMBER
+	        //Admin->1
+	        //Librarian->2
+	        //Member->3
 	    }
 }

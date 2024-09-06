@@ -4,12 +4,15 @@ import java.util.Scanner;
 
 import com.library.management.dto.User;
 import com.library.management.service.ILibraryManagementService;
-import com.library.management.service.LibraryManagementServiceImpl;
+import com.library.management.serviceFactory.LibraryServiceFactory;
 
-import lombok.AllArgsConstructor;
-@AllArgsConstructor
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+@RequiredArgsConstructor
 public class MemberController {
+	@NonNull
 	private User currentUser;
+	private ILibraryManagementService library = null;
 	
 	public void showMenu() {
 		Scanner scanner = new Scanner(System.in);
@@ -25,7 +28,7 @@ public class MemberController {
         processChoice(choice);
 	}
 	public void processChoice(int choice) {
-		ILibraryManagementService library = new LibraryManagementServiceImpl();
+		library=LibraryServiceFactory.getLibraryService();
 		boolean running = true;
 			while (running) {           
             switch (choice) {

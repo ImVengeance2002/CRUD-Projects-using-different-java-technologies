@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.Properties;
 
 public class JdbcUtil {
-	
+	public static Connection connection=null;
 	static {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -20,12 +20,13 @@ public class JdbcUtil {
 	}
 	
 	public static Connection getConnection() throws IOException, SQLException {
-		FileInputStream fis= new FileInputStream("");
-		Properties properties=new Properties();
-		properties.load(fis);
-		
-		Connection connection=DriverManager.getConnection("", properties);
-		fis.close();
+		if (connection == null) {
+			FileInputStream fis= new FileInputStream("src/main/java/com/library/management/configuration/application.properties");
+			Properties properties=new Properties();
+			properties.load(fis);
+			connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/library", properties);
+			fis.close();
+		}
 		return connection;
 	}
 	

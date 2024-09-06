@@ -5,13 +5,17 @@ import java.util.Scanner;
 import com.library.management.dto.User;
 import com.library.management.service.ILibraryManagementService;
 import com.library.management.service.IUserManagerService;
-import com.library.management.service.LibraryManagementServiceImpl;
-import com.library.management.service.UserManagerServiceImpl;
+import com.library.management.serviceFactory.LibraryServiceFactory;
+import com.library.management.serviceFactory.UserManagerServiceFactory;
 
-import lombok.AllArgsConstructor;
-@AllArgsConstructor
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+@RequiredArgsConstructor
 public class AdminController {
+	@NonNull
 	private User currentUser;
+	private ILibraryManagementService library = null;
+	private IUserManagerService userManager =null;
 	
 	public void showMenu() {
 		Scanner scanner = new Scanner(System.in);
@@ -28,13 +32,14 @@ public class AdminController {
         System.out.println("9. Exit");
         System.out.print("Choose an option: ");
         int choice=scanner.nextInt();
-        scanner.close();
+//        scanner.close();
         processChoice(choice);
 	}
 	public void processChoice(int choice) {
-		ILibraryManagementService library = new LibraryManagementServiceImpl();
-		IUserManagerService userManager =new UserManagerServiceImpl();
+		library=LibraryServiceFactory.getLibraryService();
+		userManager=UserManagerServiceFactory.getUserManagerService();
 		boolean running = true;
+		System.out.println("AdminController.processChoice()");
 			while (running) {           
             switch (choice) {
                 case 1:
